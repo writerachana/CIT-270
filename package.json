@@ -1,0 +1,22 @@
+{
+  "name": "cit-270",
+  "version": "1.0.0",
+  "description": "token API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/writerachana/CIT-270.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/writerachana/CIT-270/issues"
+  },
+  "homepage": "https://github.com/writerachana/CIT-270#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
