@@ -1,1 +1,1 @@
-curl -v https://dev.stedi.me/validate/49a5dc72-50b0-473f-92fc-9cb6897baa29
+curl -v http://dev.stedi.me/validate/49a5dc72-50b0-473f-92fc-9cb6897baa29

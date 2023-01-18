@@ -1,0 +1,1 @@
+curl -v -d "@newuser.json" -X POST http://dev.stedi.me/user
