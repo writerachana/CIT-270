@@ -23,11 +23,13 @@ app.get("/", (req,res) => {
     res.send("Hello Rachana");
 });
 
-app.post('/login', (req,res) =>{
+app.post('/login', async(req,res) =>{
     const loginUser = req.body.userName;
     const loginPassword = req.body.password; //Access the password data in the body
     console.log('Login username:' +loginUser);
-    if (loginUser=="willy1995@gmail.com" && loginPassword=="Willy@pass12"){
+    const CorrectPassword = await redisClient.hGet('UserMap', loginUser);
+    // loginUser=="willy1995@gmail.com" && loginPassword=="Willy@pass12"
+    if ( loginPassword==CorrectPassword){
         const loginToken = uuidv4();
         res.send (loginToken);
        // res.send("Hello Rachana is that you? ");
