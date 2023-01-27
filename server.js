@@ -18,6 +18,8 @@ const {v4: uuidv4} = require('uuid'); //unversel unique identifier
 
 app.use(bodyParser.json()); //This looks for incoming data
 
+app.use(express.static('public'));
+
 app.get("/", (req,res) => {
 
     res.send("Hello Rachana");
