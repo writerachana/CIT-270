@@ -1,32 +1,19 @@
 const express = require ("express");
-
 const app = express ();
-
 const port =3000;
-
 const bodyParser = require('body-parser');
-
 const Redis = require('redis');
-
-const redisClient =Redis.createClient(
-    {
-    url:"redis://127.0.0.1:6379"
-    }
-);
-
+const redisClient =Redis.createClient({url:"redis://127.0.0.1:6379"});
 const {v4: uuidv4} = require('uuid'); //unversel unique identifier
-
 app.use(bodyParser.json()); //This looks for incoming data
-
 app.use(express.static('public'));
+app.get("/", (req,res) => {res.send("Hello Rachana");});
+const cookieParser = require("cookie-Parser");
+app.use(cookieParser());
 
-app.get("/", (req,res) => {
-
-    res.send("Hello Rachana");
-});
-
-app.get("/validate/:loginToken", async(req, res) =>{
-    const loginToken = req.params.loginToken;
+app.get("/validate",async(req, res) =>{
+    const loginToken = req.cookies.stedicookie;
+    console.log("loginToken", loginToken);
     const loginUser = await redisClient.hGet('TokenMap', loginToken); //get token to Map
     res.send(loginUser);
 });
