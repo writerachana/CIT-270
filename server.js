@@ -11,6 +11,13 @@ app.get("/", (req,res) => {res.send("Hello Rachana");});
 const cookieParser = require("cookie-Parser");
 app.use(cookieParser());
 
+app.post('/rapidsteptest', async (req, res) =>{
+    const steps = req.body;
+    await redisClient.zAdd("Steps", steps,)
+    console.log("Steps", steps);
+    res.send('saved');
+});
+
 app.get("/validate",async(req, res) =>{
     const loginToken = req.cookies.stedicookie;
     console.log("loginToken", loginToken);
