@@ -11,9 +11,24 @@ app.get("/", (req,res) => {res.send("Hello Rachana");});
 const cookieParser = require("cookie-Parser");
 app.use(cookieParser());
 
+app.use(async function (req, res, next){
+    var cookie = req.cookies.stedicookie;
+    if(cookie === undefined && !req.url.includes("login") && !req.url.includes("html") && req.url !== '/'){
+        //no: set a new cookie
+        res.status(401);
+        res.send("no cookie");
+    }
+    else{
+        //yes, cookie was already precest
+        res.status(200);
+        next();
+    }
+});
+
 app.post('/rapidsteptest', async (req, res) =>{
     const steps = req.body;
-    await redisClient.zAdd("Steps", steps,)
+    //await redisClient.zAdd("Steps", steps,)
+    await redisClient.zAdd('Steps',[{score:0,value:JSON.stringify(steps)}]);
     console.log("Steps", steps);
     res.send('saved');
 });

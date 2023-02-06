@@ -66,8 +66,8 @@
                 document.getElementById('score').innerHTML = customerRisk.score;
             },
             headers: { "suresteps.session.token": usertoken},
-            contentType: "application/text",
-            dataType: 'text'
+            contentType: "application/json",
+            //dataType: 'text'
         });
 
     }
