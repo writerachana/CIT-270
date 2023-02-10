@@ -1,14 +1,18 @@
 const express = require ("express");
 const app = express ();
-const port =3000;
+const port = 443;
 const bodyParser = require('body-parser');
 const Redis = require('redis');
 const redisClient =Redis.createClient({url:"redis://127.0.0.1:6379"});
 const {v4: uuidv4} = require('uuid'); //unversel unique identifier
+const cookieParser = require("cookie-Parser");
+const https = require('https');
+const fs = require('fs');
+
 app.use(bodyParser.json()); //This looks for incoming data
 app.use(express.static('public'));
 app.get("/", (req,res) => {res.send("Hello Rachana");});
-const cookieParser = require("cookie-Parser");
+
 app.use(cookieParser());
 
 app.use(async function (req, res, next){
@@ -61,9 +65,21 @@ app.post('/login', async(req,res) =>{
     //res.send('Hello' +loginUser);
 });
 
-app.listen(port, () =>{
-    redisClient.connect();
-    console.log("listing");
+//app.listen(port, () =>{
+    //redisClient.connect();
+    //console.log("listing");
 
+//});
+
+https.createServer(
+    {
+        key:fs.readFileSync('./server.key'),
+        cert:fs.readFileSync('./server.cert'), 
+        ca:fs.readFileSync('./chain.pem')
+    },
+app
+).listen(port, () =>{
+    redisClient.connect();
+    console.log('Listening on port: '+port);
 });
 
