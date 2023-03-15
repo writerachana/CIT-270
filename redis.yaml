@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-stedi-rachana
+spec:
+  selector:
+    matchLabels:
+      app: redis-stedi-rachana
+  serviceName: redis-stedi-rachana
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-stedi-rachana
+    spec:
+      containers:
+        - name: redis-stedi-rachana
+          image: redis:7.0.5-alpine
+          imagePullPolicy: Always
+          args: ["--requirepass", "$(REDIS_PASS)", "--appendonly", "yes", "--save", "900","1", "--save", "30", "2"]
+          ports:
+            - containerPort: 6397
+              name: redis
+          env:
+          - name: REDIS_PASS
+            valueFrom:
+              secretKeyRef:
+                name: redis-secrets-rachana
+                key: REDIS_PASS
+          volumeMounts:
+            - mountPath: /data
+              name: redis-rachana-volume
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-rachana-volume
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-stedi-rachana
+spec:
+  ports:
+    - port: 6397
+      name: redis
+  clusterIP: None
+  selector:
+    app: redis-stedi-rachana
+
