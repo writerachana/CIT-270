@@ -19,7 +19,7 @@ spec:
           imagePullPolicy: Always
           args: ["--requirepass", "$(REDIS_PASS)", "--appendonly", "yes", "--save", "900","1", "--save", "30", "2"]
           ports:
-            - containerPort: 6397
+            - containerPort: 6379
               name: redis
           env:
           - name: REDIS_PASS
@@ -46,7 +46,7 @@ metadata:
   name: redis-stedi-rachana
 spec:
   ports:
-    - port: 6397
+    - port: 6379
       name: redis
   clusterIP: None
   selector:
