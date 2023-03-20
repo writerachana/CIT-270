@@ -33,3 +33,15 @@ spec:
       - name: ssl
         secret:
           secretName: rachanakumbhakar
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: cit270rachanaservice-loadbalancer
+spec:
+  selector:
+    app: cit270rachanaservice
+  type: LoadBalancer
+  ports:
+  - port: 443
+    targetPort: 443
