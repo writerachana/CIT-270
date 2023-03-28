@@ -1,6 +1,6 @@
 const express = require ("express");
 const app = express ();
-const port = 443;
+const port = 3000;
 const bodyParser = require('body-parser');
 const Redis = require('redis');
 const redisClient =Redis.createClient({url:"redis://default:rachana@redis-stedi-rachana:6379"});
@@ -65,21 +65,21 @@ app.post('/login', async(req,res) =>{
     //res.send('Hello' +loginUser);
 });
 
-//app.listen(port, () =>{
-    //redisClient.connect();
-    //console.log("listing");
-
-//});
-
-https.createServer(
-    {
-        key:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/privkey.pem'),
-        cert:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/cert.pem'), 
-        ca:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/fullchain.pem')
-    },
-app
-).listen(port, () =>{
+app.listen(port, () =>{
     redisClient.connect();
-    console.log('Listening on port: '+port);
+    console.log("listing");
+
 });
+
+//https.createServer(
+    //{
+        //key:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/privkey.pem'),
+        //cert:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/cert.pem'), 
+        //ca:fs.readFileSync('/etc/letsencrypt/live/rachanakumbhakar.cit270.com/fullchain.pem')
+    //},
+//app
+//.listen(port, () =>{
+    //redisClient.connect();
+    //console.log('Listening on port: '+port);
+//});
 
