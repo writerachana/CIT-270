@@ -46,3 +46,44 @@ spec:
 #   - port: 443
 #     targetPort: 443
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stedi-rachanakumbhakar-nodeport
+spec:
+  selector:
+    app: cit270rachanaservice #this needs to match the name of your deployment.
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 3000
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: stedi-rachanakumbhakar-certificate
+spec:
+  domains:
+    - rachanakumbhakar.cit270.com #this needs to be your domain name from DNS
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stedi-rachanakumbhakar-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: cit270rachana
+    networking.gke.io/managed-certificates: stedi-rachanakumbhakar-certificate
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stedi-rachanakumbhakar-nodeport
+            port:
+              number: 80
